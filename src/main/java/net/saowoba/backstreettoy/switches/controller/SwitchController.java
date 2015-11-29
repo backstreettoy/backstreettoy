@@ -56,7 +56,7 @@ public class SwitchController extends JsonResultController implements
 
 	}
 	
-	void init() {
+	public void init() {
 		innerSwitchNameActions = new HashMap<String,Action>();
 		innerSwitchNameActions.put(OPERATION_DESP, new ListAllSwitches());
 		initActions(innerSwitchNameActions);

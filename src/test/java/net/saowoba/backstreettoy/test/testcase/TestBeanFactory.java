@@ -5,6 +5,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
 import net.saowoba.backstreettoy.beanfactory.BeanFactory;
 import net.saowoba.backstreettoy.dataobject.Result;
 import net.saowoba.backstreettoy.switches.annotation.Operation;
@@ -26,7 +29,15 @@ public class TestBeanFactory implements BeanFactory {
 		@Operation(name="operationA",parameters={"paramA","paramB"})
 		public Result operationA(HttpServletRequest request, HttpServletResponse response,
 				Map<String,String> param) {
-			return new Result();
+			Result ret = new Result();
+			ret.setSuccess(true);
+			ret.setFailReason("Fail Reason");
+			
+			JsonObject extra = new JsonObject();
+			extra.add("value", new JsonPrimitive("hello"));
+			ret.setExtra(extra);
+			
+			return ret;
 		}
 		
 		@Operation(name="operationB", parameters = {"paramA"})
