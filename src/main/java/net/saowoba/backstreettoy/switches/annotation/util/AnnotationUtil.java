@@ -1,12 +1,15 @@
 package net.saowoba.backstreettoy.switches.annotation.util;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-import net.saowoba.backstreettoy.dataobject.Result;
+import javax.servlet.http.HttpServletRequest;
+
 import net.saowoba.backstreettoy.switches.annotation.Operation;
 import net.saowoba.backstreettoy.switches.annotation.Switch;
 import net.saowoba.backstreettoy.switches.annotation.dataobject.OperationDO;
@@ -17,6 +20,7 @@ import net.saowoba.backstreettoy.utils.BeanUtils;
 import com.google.common.base.Function;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 
@@ -108,9 +112,13 @@ public class AnnotationUtil {
 		Map<String, OperationDO> operations = getOperations(target);
 		if(operations.containsKey(opName)) {
 			Method method = operations.get(opName).getMethod();
+			
+			Class<?>[] parameterTypes = method.getParameterTypes();
+			Object[] invokeObj = generateArgument(parameterTypes,args);
+			
 			Object ret;
 			try {
-				ret = method.invoke(target, args);
+				ret = method.invoke(target, invokeObj);
 				return ret;
 				
 			} catch (Exception e) {
@@ -120,6 +128,22 @@ public class AnnotationUtil {
 		else {
 			throw new RuntimeException("Operation NOT exist");
 		}
+	}
+
+
+	private static Object[] generateArgument(Class<?>[] parameterTypes,
+			Object[] args) {
+		
+		LinkedList<Object> l = new LinkedList<Object>();
+		
+		for(Class<?> clazz : parameterTypes) {
+			for(Object arg : args) {
+				if(clazz.isInstance(arg)) {
+					l.add(arg);
+				}
+			}
+		}
+		return l.toArray(new Object[0]);
 	}
 
 }

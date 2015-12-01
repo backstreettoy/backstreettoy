@@ -1,7 +1,7 @@
 package net.saowoba.backstreettoy.utils.check;
 
+import net.saowoba.backstreettoy.constants.ErrorInfo;
 import net.saowoba.backstreettoy.utils.check.exception.CheckException;
-import net.saowoba.server.constants.ErrorInfo;
 
 public class EqualsChecker {
 

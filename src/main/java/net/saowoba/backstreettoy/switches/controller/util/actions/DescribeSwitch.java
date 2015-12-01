@@ -7,6 +7,7 @@ import net.saowoba.backstreettoy.aware.ApplicationContextAware;
 import net.saowoba.backstreettoy.beanfactory.BeanFactory;
 import net.saowoba.backstreettoy.dataobject.Result;
 import net.saowoba.backstreettoy.switches.annotation.dataobject.OperationDO;
+import net.saowoba.backstreettoy.switches.annotation.dataobject.StringParameters;
 import net.saowoba.backstreettoy.switches.annotation.dataobject.SwitchDO;
 import net.saowoba.backstreettoy.switches.annotation.util.AnnotationUtil;
 import net.saowoba.backstreettoy.switches.controller.util.JsonUtil;
@@ -27,7 +28,7 @@ implements Action,ApplicationContextAware{
 
 	@Override
 	public JsonElement act(String switchName, String operation,
-			Map<String, String> param) {
+			StringParameters param) {
 		
 		Result ret = new Result();
 		Object bean = context.getBean(switchName);

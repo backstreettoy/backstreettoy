@@ -1,6 +1,6 @@
 package net.saowoba.backstreettoy.utils.check.exception;
 
-import net.saowoba.server.constants.ErrorInfo;
+import net.saowoba.backstreettoy.constants.ErrorInfo;
 
 /**
  * 校验异常

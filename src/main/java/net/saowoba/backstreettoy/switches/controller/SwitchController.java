@@ -13,6 +13,7 @@ import net.saowoba.backstreettoy.aware.ApplicationContextAware;
 import net.saowoba.backstreettoy.aware.SwitchNamesAware;
 import net.saowoba.backstreettoy.beanfactory.BeanFactory;
 import net.saowoba.backstreettoy.dataobject.Result;
+import net.saowoba.backstreettoy.switches.annotation.dataobject.StringParameters;
 import net.saowoba.backstreettoy.switches.annotation.util.AnnotationUtil;
 import net.saowoba.backstreettoy.switches.controller.util.HttpUtil;
 import net.saowoba.backstreettoy.switches.controller.util.JsonUtil;
@@ -27,8 +28,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.ServletRequestUtils;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Maps.EntryTransformer;
 import com.google.gson.JsonElement;
 
 public class SwitchController extends JsonResultController implements
@@ -81,42 +80,32 @@ public class SwitchController extends JsonResultController implements
 		// 去掉开关前面的路径，去掉后面的.htm等后缀
 		String switchName = HttpUtil.parseSwitchName(reqUrl);
 		String operation = ServletRequestUtils.getStringParameter(request, KEY_OPERATION);
-		Map<String,String[]> params = HttpUtil.collectParameters(request);
+		Map<String,String[]> p = HttpUtil.collectParameters(request);
+		StringParameters params = new StringParameters();
+		params.setParameters(p);
 		
-		Map<String,String> simpliedParams = Maps.transformEntries(params, new EntryTransformer<String,String[],String>(){
-
-			@Override
-			public String transformEntry(String key, String[] value) {
-				if(value!=null && value.length > 0) {
-					return value[0];
-				}
-				else {
-					return "";
-				}
-			}});
-
 		if (!Strings.isNullOrEmpty(switchName)) {
 
 			if (innerSwitchNameActions.containsKey(switchName)) {
 				//switchName级别开关
-				return invokeInnerSwitchNameAction(switchName,operation,simpliedParams);
+				return invokeInnerSwitchNameAction(switchName,operation,params);
 			} else if (!switchNames.contains(switchName)) {
 				// switchName 不存在
-				return switchNotExistsAction.act(switchName,operation,simpliedParams);
+				return switchNotExistsAction.act(switchName,operation,params);
 			} else {
 				Object sw = null;
 				sw = context.getBean(switchName);
 				
 				if(sw == null) {
-					return switchNotExistsAction.act(switchName, operation, simpliedParams);
+					return switchNotExistsAction.act(switchName, operation, params);
 				}
 
 				if (Strings.isNullOrEmpty(operation)) {
 					// Operation级别开关
-					return operationNotExistsAction.act(switchName, operation, simpliedParams);
+					return operationNotExistsAction.act(switchName, operation, params);
 				} else if (innerOperationActions.containsKey(operation)) {
 					// 系统开关
-					return invokeOperationAction(switchName,operation,simpliedParams);
+					return invokeOperationAction(switchName,operation,params);
 				} else {
 					// 调用函数
 					Result opInvokeRet = invokeSwitchOperation(request,response,sw,params,switchName,operation);
@@ -124,17 +113,17 @@ public class SwitchController extends JsonResultController implements
 				}
 			}
 		} else {
-			return switchNotExistsAction.act(switchName, operation, simpliedParams);
+			return switchNotExistsAction.act(switchName, operation, params);
 		}
 	}
 
 	private JsonElement invokeInnerSwitchNameAction(String switchName,
-			String operation, Map<String, String> simpliedParams) {
+			String operation, StringParameters simpliedParams) {
 		return innerSwitchNameActions.get(switchName).act(switchName, operation, simpliedParams);
 	}
 
 	private JsonElement invokeOperationAction(String switchName,
-			String operation, Map<String, String> simpliedParams) {
+			String operation, StringParameters simpliedParams) {
 		return innerOperationActions.get(switchName).act(switchName, operation, simpliedParams);
 	}
 
@@ -162,7 +151,7 @@ public class SwitchController extends JsonResultController implements
 
 	private Result invokeSwitchOperation(HttpServletRequest request, HttpServletResponse response,
 			Object sw,
-			Map<String,String[]> params, String swName, String opName) {
+			StringParameters params, String swName, String opName) {
 
 		Result invokeRet = null;
 		try {

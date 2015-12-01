@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import junit.framework.Assert;
 import net.saowoba.backstreettoy.beanfactory.BeanFactory;
+import net.saowoba.backstreettoy.switches.annotation.dataobject.StringParameters;
 import net.saowoba.backstreettoy.switches.annotation.util.AnnotationUtil;
 import net.saowoba.backstreettoy.switches.controller.SwitchController;
 
@@ -32,9 +33,17 @@ public class SwitchControllerTest {
 	@Test
 	public void testInvokeOperation() throws Exception {
 		Object target = testBeanFactory.getBean("TestClassName");
-		Object ret = AnnotationUtil.invokeOperation(target, "operationA", null,null,null);
+		HttpServletRequest request = EasyMock.createMock(HttpServletRequest.class);
+		HttpServletResponse response = EasyMock.createMock(HttpServletResponse.class);
+		StringParameters params = new StringParameters();
+		Object ret = AnnotationUtil.invokeOperation(target, "operationA", request,response,params);
 		Assert.assertNotNull(ret);
-		
+		AnnotationUtil.invokeOperation(target, "operationB", request);
+	}
+	
+	
+	@Test
+	public void testMockWebRequestInvoke() throws Exception {
 		HttpServletRequest request = EasyMock.createMock(HttpServletRequest.class);
 		HttpServletResponse response = EasyMock.createMock(HttpServletResponse.class);
 		PrintWriter pw = EasyMock.createMock(PrintWriter.class);
@@ -52,6 +61,5 @@ public class SwitchControllerTest {
 		EasyMock.replay(request,response,pw);
 		
 		sc.doHandleRequest(request, response);
-		
 	}
 }

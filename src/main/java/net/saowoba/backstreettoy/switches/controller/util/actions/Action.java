@@ -2,6 +2,8 @@ package net.saowoba.backstreettoy.switches.controller.util.actions;
 
 import java.util.Map;
 
+import net.saowoba.backstreettoy.switches.annotation.dataobject.StringParameters;
+
 import com.google.gson.JsonElement;
 
 /**
@@ -11,5 +13,5 @@ import com.google.gson.JsonElement;
  */
 public interface Action {
 
-	public JsonElement act(String switchName,String operation, Map<String,String> param);
+	public JsonElement act(String switchName,String operation, StringParameters param);
 }

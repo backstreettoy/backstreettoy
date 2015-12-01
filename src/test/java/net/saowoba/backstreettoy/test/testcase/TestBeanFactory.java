@@ -1,17 +1,16 @@
 package net.saowoba.backstreettoy.test.testcase;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 import net.saowoba.backstreettoy.beanfactory.BeanFactory;
 import net.saowoba.backstreettoy.dataobject.Result;
 import net.saowoba.backstreettoy.switches.annotation.Operation;
 import net.saowoba.backstreettoy.switches.annotation.Switch;
+import net.saowoba.backstreettoy.switches.annotation.dataobject.StringParameters;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 
 
@@ -28,7 +27,7 @@ public class TestBeanFactory implements BeanFactory {
 		
 		@Operation(name="operationA",parameters={"paramA","paramB"})
 		public Result operationA(HttpServletRequest request, HttpServletResponse response,
-				Map<String,String> param) {
+				StringParameters param) {
 			Result ret = new Result();
 			ret.setSuccess(true);
 			ret.setFailReason("Fail Reason");

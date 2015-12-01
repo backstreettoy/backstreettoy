@@ -1,9 +1,9 @@
 package net.saowoba.backstreettoy.switches.controller.util.actions;
 
 import java.util.List;
-import java.util.Map;
 
 import net.saowoba.backstreettoy.aware.SwitchNamesAware;
+import net.saowoba.backstreettoy.switches.annotation.dataobject.StringParameters;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,7 +16,7 @@ public class ListAllSwitches implements Action,SwitchNamesAware {
 
 	@Override
 	public JsonElement act(String switchName, String operation,
-			Map<String, String> param) {
+			StringParameters param) {
 		return gson.toJsonTree(switchNames);
 	}
 
