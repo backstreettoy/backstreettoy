@@ -124,7 +124,7 @@ public class SwitchController extends JsonResultController implements
 
 	private JsonElement invokeOperationAction(String switchName,
 			String operation, StringParameters simpliedParams) {
-		return innerOperationActions.get(switchName).act(switchName, operation, simpliedParams);
+		return innerOperationActions.get(operation).act(switchName, operation, simpliedParams);
 	}
 
 
