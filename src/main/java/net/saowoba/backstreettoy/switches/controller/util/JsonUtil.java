@@ -16,9 +16,13 @@ public class JsonUtil {
 		return gson.toJson(o);
 	}
 	
-	
 	public static JsonElement toJsonElement(Object o) {
 		return gson.toJsonTree(o);
+	}
+	
+	public static JsonElement toJsonElement(Object o , GsonBuilder gb) {
+		Gson g = gb.create();
+		return g.toJsonTree(o);
 	}
 	
 	public static JsonElement toJsonElement(Object o, Type typeOfSrc) {

@@ -1,7 +1,5 @@
 package net.saowoba.backstreettoy.switches.controller.util.actions;
 
-import java.util.Map;
-
 import net.saowoba.backstreettoy.switches.annotation.dataobject.StringParameters;
 
 import com.google.gson.JsonElement;
