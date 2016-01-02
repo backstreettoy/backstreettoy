@@ -15,6 +15,7 @@ import net.saowoba.backstreettoy.switches.controller.SwitchController;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SwitchControllerTest {
@@ -42,6 +43,7 @@ public class SwitchControllerTest {
 	}
 	
 	
+	@Ignore
 	@Test
 	public void testMockWebRequestInvoke() throws Exception {
 		HttpServletRequest request = EasyMock.createMock(HttpServletRequest.class);

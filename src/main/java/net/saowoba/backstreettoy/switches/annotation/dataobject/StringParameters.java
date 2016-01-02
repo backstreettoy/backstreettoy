@@ -1,5 +1,6 @@
 package net.saowoba.backstreettoy.switches.annotation.dataobject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Map;
  */
 public class StringParameters {
 	
-	private Map<String,String[]> paramters;
+	private Map<String,String[]> paramters = new HashMap<String,String[]>();
 	
 	public String getSimpleStringParameter(String key) {
 		return paramters.containsKey(key) ? paramters.get(key)[0] : null;
@@ -21,6 +22,10 @@ public class StringParameters {
 	
 	public void setParameters(Map<String,String[]> m) {
 		this.paramters = m;
+	}
+	
+	public void setParameter(String key, String[] values) {
+		paramters.put(key, values);
 	}
 
 }
