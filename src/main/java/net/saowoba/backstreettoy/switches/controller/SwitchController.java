@@ -32,6 +32,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.ServletRequestUtils;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonElement;
@@ -102,7 +103,7 @@ public class SwitchController extends JsonResultController implements
 			stringParams.setParameters(p);
 		}
 		
-		operation = stringParams.getSimpleStringParameter(KEY_OPERATION);
+		operation = ServletRequestUtils.getStringParameter(request, KEY_OPERATION);
 		if (!Strings.isNullOrEmpty(switchName)) {
 
 			if (innerSwitchNameActions.containsKey(switchName)) {
@@ -192,9 +193,9 @@ public class SwitchController extends JsonResultController implements
 			
 			StringParameters stringp = new StringParameters();
 			StreamParameters streamp = new StreamParameters();
+			ret.put("stringParam", stringp);
+			ret.put("streamParam",streamp);
 			if(paramters ==null) {
-				ret.put("stringParam", stringp);
-				ret.put("streamParam",streamp);
 				return ret;
 			}
 			

@@ -1,11 +1,12 @@
 package net.saowoba.backstreettoy.switches.annotation.dataobject;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 public class StreamParameters {
 	
-	private Map<String,StreamInfo> parameters;
+	private Map<String,StreamInfo> parameters = new HashMap<String,StreamInfo>();
 	
 	
 	public static class StreamInfo {
