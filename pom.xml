@@ -8,7 +8,7 @@
 	<groupId>net.saowoba</groupId>
 	<artifactId>backstreettoy</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.1-ALPHA</version>
 	<name>backstreettoy</name>
 	
 	<parent>
