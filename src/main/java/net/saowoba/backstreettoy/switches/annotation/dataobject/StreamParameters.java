@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
 public class StreamParameters {
 	
 	private Map<String,StreamInfo> parameters = new HashMap<String,StreamInfo>();
@@ -15,6 +17,16 @@ public class StreamParameters {
 		private String contentType;
 		private long size;
 		private String name;
+		
+		
+		@Override
+		public String toString() {
+			StringBuilder content = new StringBuilder();
+			content.append("contentType=").append(contentType)
+					.append(",size=").append(size)
+					.append(".name=").append(name);
+			return content.toString();
+		}
 		
 		public InputStream getStream() {
 			return stream;
@@ -40,7 +52,17 @@ public class StreamParameters {
 		public void setName(String name) {
 			this.name = name;
 		}
-		
+	}
+	
+	
+	@Override
+	public String toString() {
+		if(parameters != null) {
+			return new ReflectionToStringBuilder(parameters).toString();
+		}
+		else {
+			return "";
+		}
 	}
 
 
