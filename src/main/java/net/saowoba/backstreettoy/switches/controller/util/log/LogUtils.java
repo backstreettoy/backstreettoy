@@ -1,15 +1,17 @@
 package net.saowoba.backstreettoy.switches.controller.util.log;
 
-import org.slf4j.Logger;
-
 import net.saowoba.backstreettoy.switches.annotation.dataobject.StreamParameters;
 import net.saowoba.backstreettoy.switches.annotation.dataobject.StringParameters;
 
+import org.slf4j.Logger;
+
 public class LogUtils {
+	
+	public static final String EMPTY_ARRAY[] = new String[]{};
 
 	
 	public static void logActions(String switchName, String operation,
-			StringParameters simpliedParams, StreamParameters streamParameter, Logger logger, boolean logDetailParameters) {
+			StringParameters simpliedParams, StreamParameters streamParameter,String[] excludeFields, Logger logger, boolean logDetailParameters) {
 		
 		String msgPttern;
 		if(logDetailParameters) {

@@ -1,10 +1,12 @@
 package net.saowoba.backstreettoy.switches.annotation.dataobject;
 
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class StreamParameters {
 	
@@ -22,9 +24,9 @@ public class StreamParameters {
 		@Override
 		public String toString() {
 			StringBuilder content = new StringBuilder();
-			content.append("contentType=").append(contentType)
-					.append(",size=").append(size)
-					.append(".name=").append(name);
+			content.append("contentType:").append(contentType)
+					.append(";size:").append(size)
+					.append(";name:").append(name);
 			return content.toString();
 		}
 		
@@ -57,8 +59,19 @@ public class StreamParameters {
 	
 	@Override
 	public String toString() {
+		return toString(null);
+	}
+	
+	public String toString(String[] excludeFields) {
+		Set<String> excludeFieldSet = excludeFields!=null ?  new HashSet<String>(Arrays.asList(excludeFields)) : new HashSet<String>();
 		if(parameters != null) {
-			return new ReflectionToStringBuilder(parameters).toString();
+			Map<String,StreamInfo> t = new HashMap<String,StreamInfo>(parameters.size());
+			for(Entry<String,StreamInfo> e : parameters.entrySet()) {
+				if(!excludeFieldSet.contains(e.getKey())) {
+					t.put(e.getKey(), e.getValue());
+				}
+			}
+			return t.toString();
 		}
 		else {
 			return "";

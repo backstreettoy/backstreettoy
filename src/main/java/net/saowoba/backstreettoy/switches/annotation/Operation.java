@@ -33,4 +33,10 @@ public @interface Operation {
 	 * @return
 	 */
 	VisibleTypes visible() default VisibleTypes.ALL_VISIBLE;
+	
+	/**
+	 * 不记录在Action日志的字段
+	 * @return
+	 */
+	String[] excludeLoggingFields() default {};
 }

@@ -1,14 +1,10 @@
 package net.saowoba.backstreettoy.switches.annotation.util;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-
-import javax.servlet.http.HttpServletRequest;
 
 import net.saowoba.backstreettoy.switches.annotation.Operation;
 import net.saowoba.backstreettoy.switches.annotation.Switch;
@@ -20,7 +16,6 @@ import net.saowoba.backstreettoy.utils.BeanUtils;
 import com.google.common.base.Function;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
 
@@ -87,6 +82,7 @@ public class AnnotationUtil {
 								paramDOs[i]=paramDO;
 							}
 							opDO.setParameters(paramDOs);
+							opDO.setExcludeLoggingFileds(op.excludeLoggingFields());
 							operations.add(opDO);
 						} 
 					}

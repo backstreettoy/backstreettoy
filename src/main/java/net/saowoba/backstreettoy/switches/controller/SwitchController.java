@@ -14,6 +14,7 @@ import net.saowoba.backstreettoy.aware.ApplicationContextAware;
 import net.saowoba.backstreettoy.aware.SwitchNamesAware;
 import net.saowoba.backstreettoy.beanfactory.BeanFactory;
 import net.saowoba.backstreettoy.dataobject.Result;
+import net.saowoba.backstreettoy.switches.annotation.dataobject.OperationDO;
 import net.saowoba.backstreettoy.switches.annotation.dataobject.StreamParameters;
 import net.saowoba.backstreettoy.switches.annotation.dataobject.StreamParameters.StreamInfo;
 import net.saowoba.backstreettoy.switches.annotation.dataobject.StringParameters;
@@ -42,8 +43,8 @@ public class SwitchController extends JsonResultController implements
 		ApplicationContextAware {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	private final Logger exceptionLog = LoggerFactory.getLogger(getClass() + ".Exception"); 
-	private final Logger actionLog = LoggerFactory.getLogger(getClass() + ".Action");
+	private final Logger exceptionLog = LoggerFactory.getLogger(getClass().getName() + ".Exception"); 
+	private final Logger actionLog = LoggerFactory.getLogger(getClass().getName() + ".Action");
 
 	public static final String KEY_OPERATION = "op";
 	
@@ -148,7 +149,7 @@ public class SwitchController extends JsonResultController implements
 			String operation, StringParameters simpliedParams) {
 		
 		if(logActions) {
-			LogUtils.logActions(switchName, operation, simpliedParams,null, actionLog,logDetailParameters);
+			LogUtils.logActions(switchName, operation, simpliedParams,null,null, actionLog,logDetailParameters);
 		}
 		
 		return innerSwitchNameActions.get(switchName).act(switchName, operation, simpliedParams);
@@ -157,7 +158,7 @@ public class SwitchController extends JsonResultController implements
 	private JsonElement invokeOperationAction(String switchName,
 			String operation, StringParameters simpliedParams) {
 		if(logActions) {
-			LogUtils.logActions(switchName, operation, simpliedParams,null, actionLog,logDetailParameters);
+			LogUtils.logActions(switchName, operation, simpliedParams,null,null, actionLog,logDetailParameters);
 		}
 		
 		return innerOperationActions.get(operation).act(switchName, operation, simpliedParams);
@@ -168,8 +169,11 @@ public class SwitchController extends JsonResultController implements
 			Object sw,
 			StringParameters stringParams, StreamParameters streamParams, String swName, String opName) {
 		
+		Map<String, OperationDO> operations = AnnotationUtil.getOperations(sw);
+		OperationDO op = operations.get(opName);
+		String	excludeFields[] = op!=null ? op.getExcludeLoggingFileds() : null;
 		if(logActions) {
-			LogUtils.logActions(swName, opName, stringParams,streamParams, actionLog,logDetailParameters);
+			LogUtils.logActions(swName, opName, stringParams,streamParams,excludeFields, actionLog,logDetailParameters);
 		}
 		
 		Result invokeRet = null;

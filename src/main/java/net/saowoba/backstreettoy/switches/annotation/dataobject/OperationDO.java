@@ -20,6 +20,8 @@ public class OperationDO {
 	private String displayName;
 	@Expose (serialize = false, deserialize = false)
 	private Method method;
+	@Expose(serialize = false, deserialize = false)
+	private String[] excludeLoggingFileds; 
 	
 	public String getName() {
 		return name;
@@ -56,6 +58,12 @@ public class OperationDO {
 	}
 	public void setParameters(Parameter[] parameters) {
 		this.parameters = parameters;
+	}
+	public String[] getExcludeLoggingFileds() {
+		return excludeLoggingFileds;
+	}
+	public void setExcludeLoggingFileds(String[] excludeLoggingFileds) {
+		this.excludeLoggingFileds = excludeLoggingFileds;
 	}
 	
 	
