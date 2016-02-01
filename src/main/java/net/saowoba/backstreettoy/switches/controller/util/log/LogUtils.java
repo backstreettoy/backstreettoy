@@ -19,7 +19,9 @@ public class LogUtils {
 					"Invoke inner switch Action: switchName:{}, operationName:{}, stringParameter:{}, streamParameter:{}"
 					: "Invoke inner switch Action: switchName:{}, operationName:{}, stringParameter:{}");
 			if(logger.isInfoEnabled()) {
-				logger.info(msgPttern,switchName,operation,simpliedParams,streamParameter);
+				logger.info(msgPttern,switchName,operation,
+						simpliedParams != null ? simpliedParams.toString(excludeFields) : "",
+						streamParameter != null ? streamParameter.toString(excludeFields) : "");
 			}
 		}
 		else {
