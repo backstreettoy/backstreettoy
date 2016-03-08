@@ -10,7 +10,7 @@ Our goal is reducing the costs and increasing the productity for full-interactiv
 
 首先将实现类与Web容器提高业务实现的可测性。用各种Mock工具对Servlet相关参数Mock手感均不是很爽。
 
-其次，从交互角度上看，Ajax请求的灵活度比页面同步提交的灵活性高，特别在如今Web页面越来越花哨，各种异步提交局部刷新等，尽管需要多写Javascript逻辑，但是相比带来的好处（灵活的控制流程、Javascript前台渲染降低后台压力与延迟等），个人看是值得的。
+其次，从交互角度上看，Ajax请求的灵活度比页面同步提交的灵活性高，特别在如今Web页面越来越花哨，各种异步提交局部刷新等，尽管需要多写Javascript逻辑，但是相比带来的好处（灵活的控制流程、Javascript前台渲染降低后台压力与延迟等），个人看是值得的。而且需要额外多写的Javascript主要是在Ajax完成后的渲染逻辑，这一块是一直可以优化的。
 
 
 正在计划中的工具
