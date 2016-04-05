@@ -2,15 +2,34 @@ package net.saowoba.backstreettoy.switches.controller.util;
 
 import java.lang.reflect.Type;
 
+import net.saowoba.backstreettoy.dataobject.Result;
+
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 public class JsonUtil {
 	
-	private static Gson gson = new GsonBuilder().create();
-	private static Gson gsonWithExclude = new GsonBuilder()
+	private static Gson gson = new GsonBuilder().setExclusionStrategies(new ExcludeIntermidiateInfo()).create();
+	private static Gson gsonWithExclude = new GsonBuilder().setExclusionStrategies(new ExcludeIntermidiateInfo())
 			.excludeFieldsWithoutExposeAnnotation().create();
+	
+	
+	private static class ExcludeIntermidiateInfo implements ExclusionStrategy {
+
+		@Override
+		public boolean shouldSkipField(FieldAttributes f) {
+			return f.getDeclaringClass().equals(Result.class) && f.getName().equals("intermediateInfo");
+		}
+
+		@Override
+		public boolean shouldSkipClass(Class<?> clazz) {
+			return false;
+		}
+		
+	}
 
 	public static String toJson(Object o) {
 		return gson.toJson(o);

@@ -1,6 +1,8 @@
 package net.saowoba.backstreettoy.dataobject;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.JsonElement;
 
@@ -21,6 +23,8 @@ public class Result implements Serializable {
 	
 	private JsonElement extra;
 	
+	private Map<String,Object> intermediateInfo;
+	
 	public boolean isSuccess() {
 		return success;
 	}
@@ -39,4 +43,15 @@ public class Result implements Serializable {
 	public void setExtra(JsonElement extra) {
 		this.extra = extra;
 	}
+	public Map<String,Object> getIntermediateInfo() {
+		if (intermediateInfo == null) {
+			intermediateInfo = new HashMap<String, Object>();
+		}
+		return intermediateInfo;
+	}
+	public void setIntermediateInfo(Map<String,Object> intermidateInfo) {
+		this.intermediateInfo = intermidateInfo;
+	}
+	
+	
 }
